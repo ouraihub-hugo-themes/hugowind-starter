@@ -1,1 +1,0 @@
-# github.com/ouraihub-hugo-themes/hugowind-dist v0.1.4
