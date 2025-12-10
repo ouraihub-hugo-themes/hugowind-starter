@@ -20,7 +20,3 @@ target = "archetypes"
 [[mounts]]
 source = "assets"
 target = "assets"
-
-[[mounts]]
-source = "data"
-target = "data"
