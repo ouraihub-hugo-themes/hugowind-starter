@@ -1,0 +1,77 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "^1.21.0"
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      - name: Cache Hugo Modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/hugo_cache
+            /tmp/hugo_cache
+          key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-hugomod-
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Update Hugo Modules
+        run: |
+          hugo mod get -u github.com/ouraihub-hugo-themes/hugowind-dist@latest
+          hugo mod tidy
+
+      - name: Build site
+        run: hugo --minify --gc --baseURL "https://hugowinds.github.io/"
+        env:
+          HUGO_ENVIRONMENT: production
+
+      - name: Generate search index
+        run: pnpm run pagefind
+
+      - name: Deploy to hugowind.github.io
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        with:
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}
+          external_repository: hugowinds/hugowinds.github.io
+          publish_branch: main
+          publish_dir: ./public
+          commit_message: ${{ github.event.head_commit.message }}
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"

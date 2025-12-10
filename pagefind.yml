@@ -1,0 +1,12 @@
+# Pagefind 搜索配置
+site: public
+output_subdir: pagefind
+
+# 排除不需要索引的内容
+exclude_selectors:
+  - "nav"
+  - "footer"
+  - ".no-index"
+
+# 语言支持
+force_language: en

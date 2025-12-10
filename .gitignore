@@ -1,0 +1,22 @@
+# Hugo
+public/
+resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+# Node
+node_modules/
+.pnpm-debug.log
+
+# Pagefind
+public/pagefind/
+
+# IDE
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+.env.local

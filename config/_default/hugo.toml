@@ -1,0 +1,63 @@
+# HugoWind Starter - Hugo 主配置
+# 文档: https://github.com/ouraihub-hugo-themes/hugowind
+
+baseURL = 'https://example.com/'
+title = 'My HugoWind Site'
+languageCode = 'en'
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = true
+
+# 多语言支持
+enableMissingTranslationPlaceholders = false
+
+# URL 配置
+disablePathToLower = false
+removePathAccents = true
+
+# Hugo 模块配置
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.120.0"
+  [[module.imports]]
+    path = "github.com/ouraihub-hugo-themes/hugowind-dist"
+
+# 构建配置
+[build]
+  writeStats = true
+
+# 输出格式
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+  page = ['HTML']
+  section = ['HTML', 'RSS']
+  taxonomy = ['HTML', 'RSS']
+  term = ['HTML', 'RSS']
+
+# Sitemap 配置
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+# 永久链接
+[permalinks]
+  posts = '/:slug/'
+  categories = '/category/:slug/'
+  tags = '/tag/:slug/'
+
+# 分类法
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+
+# 压缩配置
+[minify]
+  disableJSON = true
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepWhitespace = false
+
+# 服务器配置
+[server]
+  port = 1313
