@@ -15,7 +15,7 @@
 ### 步骤 2：创建目标仓库
 
 1. 创建组织 `hugowind`（如果还没有）
-2. 在该组织下创建仓库 `hugowind.github.io`
+2. 在该组织下创建仓库 `hugowinds.github.io`
 3. 确保仓库是 public 的
 
 ### 步骤 3：添加 Secret 到 starter 仓库
